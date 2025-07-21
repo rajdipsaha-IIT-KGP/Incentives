@@ -1,34 +1,57 @@
-import React from "react";
-import Lottie from "lottie-react";
+
+
 import happyGift from "./assets/happyGift.json";
 import cretificate from "./assets/cretificate.json";
 import invitation from "./assets/invitation.json";
 import connection from "./assets/connection.json";
 
+import React, { useState } from "react";
+import Lottie from "lottie-react";
+
 const FlipCard = ({ animation, title, description }) => {
+  const [flipped, setFlipped] = useState(false);
+
+  const handleClick = () => {
+    if (window.innerWidth < 640) {
+      setFlipped(!flipped);
+    }
+  };
+
   return (
-    <div className="w-60 h-60 relative group" style={{ perspective: "1000px" }}>
+    <div
+      className="w-60 h-60 relative group"
+      style={{ perspective: "1000px", marginTop: "1rem" }}
+      onClick={handleClick}
+    >
       <div
-        className="relative w-full h-full transition-transform duration-700 group-hover:rotate-y-180"
+        className={`relative w-full h-full transition-transform duration-700 ${
+          flipped ? "rotate-y-180" : ""
+        } sm:group-hover:rotate-y-180`}
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Front Side */}
         <div
           className="absolute w-full h-full bg-white rounded-xl shadow-xl flex flex-col items-center justify-center p-4"
-          style={{ backfaceVisibility: "hidden" }}
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+          }}
         >
           <Lottie animationData={animation} className="w-30 h-30" loop={true} />
-          <h2 className="text-xl font-['Poppins'] font-semibold text-gray-800 text-center">
+          <h2 className="text-xl font-semibold text-gray-800 text-center font-['Poppins']">
             {title}
           </h2>
         </div>
 
         {/* Back Side */}
         <div
-          className="absolute w-full h-full bg-white rounded-xl shadow-xl flex items-center justify-center p-6 transform rotate-y-180"
-          style={{ backfaceVisibility: "hidden" }}
+          className="absolute w-full h-full bg-white rounded-xl shadow-xl flex items-center justify-center p-6 rotate-y-180"
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+          }}
         >
-          <p className="text-xl font-['Poppins'] font-semibold text-gray-800 text-center">
+          <p className="text-xl font-semibold text-gray-800 text-center font-['Poppins']">
             {description}
           </p>
         </div>
@@ -36,6 +59,7 @@ const FlipCard = ({ animation, title, description }) => {
     </div>
   );
 };
+
 
 const App = () => {
   return (

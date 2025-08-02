@@ -12,25 +12,25 @@ const FlipCard = ({ animation, title, description }) => {
   const [flipped, setFlipped] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth < 640);
+  //   };
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    let interval;
-    if (isMobile) {
-      interval = setInterval(() => {
-        setFlipped((prev) => !prev);
-      }, 3000);
-    }
+  //   let interval;
+  //   if (isMobile) {
+  //     interval = setInterval(() => {
+  //       setFlipped((prev) => !prev);
+  //     }, 3000);
+  //   }
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (interval) clearInterval(interval);
-    };
-  }, [isMobile]); 
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //     if (interval) clearInterval(interval);
+  //   };
+  // }, [isMobile]); 
 
   const handleClick = () => {
     if (isMobile) {
@@ -40,9 +40,9 @@ const FlipCard = ({ animation, title, description }) => {
 
   return (
     <div
-      className="w-60 h-60 relative group"
+      className="w-70 h-70 relative group"
       style={{ perspective: "1000px", marginTop: "1rem" }}
-      onClick={handleClick}
+      
     >
       <div
         className={`relative w-full h-full transition-transform duration-700 ${
@@ -62,6 +62,18 @@ const FlipCard = ({ animation, title, description }) => {
           <h2 className="text-xl font-semibold text-gray-800 text-center font-['Poppins']">
             {title}
           </h2>
+         <button
+  onClick={(e)=>{
+    e.stopPropagation();
+    setFlipped((prev) => !prev);
+  }}
+  className="block sm:hidden bg-gradient-to-r from-rose-600 via-pink-600 to-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-lg animate-pulse hover:scale-105 transition transform duration-300"
+
+>
+  Tap Here For More
+</button>
+
+
         </div>
 
         {/* Back Side */}
@@ -70,7 +82,7 @@ const FlipCard = ({ animation, title, description }) => {
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
-          }}
+          }} onClick={handleClick}
         >
           <p className="text-xl font-semibold text-gray-800 text-center font-['Poppins']">
             {description}

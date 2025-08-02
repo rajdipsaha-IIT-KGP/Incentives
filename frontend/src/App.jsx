@@ -67,7 +67,7 @@ const FlipCard = ({ animation, title, description }) => {
     e.stopPropagation();
     setFlipped((prev) => !prev);
   }}
-  className="block sm:hidden bg-gradient-to-r from-rose-600 via-pink-600 to-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-lg animate-pulse hover:scale-105 transition transform duration-300"
+  className="block  bg-gradient-to-r from-rose-600 via-pink-600 to-red-700 text-white font-bold py-2 px-4 rounded-xl shadow-lg animate-pulse hover:scale-105 transition transform duration-300 mt-7"
 
 >
   Tap Here For More

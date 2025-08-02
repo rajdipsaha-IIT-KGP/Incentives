@@ -5,15 +5,36 @@ import cretificate from "./assets/cretificate.json";
 import invitation from "./assets/invitation.json";
 import connection from "./assets/connection.json";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 
 const FlipCard = ({ animation, title, description }) => {
   const [flipped, setFlipped] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    let interval;
+    if (isMobile) {
+      interval = setInterval(() => {
+        setFlipped((prev) => !prev);
+      }, 3000);
+    }
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (interval) clearInterval(interval);
+    };
+  }, [isMobile]); 
 
   const handleClick = () => {
-    if (window.innerWidth < 640) {
-      setFlipped(!flipped);
+    if (isMobile) {
+      setFlipped((prev) => !prev);
     }
   };
 
@@ -26,7 +47,7 @@ const FlipCard = ({ animation, title, description }) => {
       <div
         className={`relative w-full h-full transition-transform duration-700 ${
           flipped ? "rotate-y-180" : ""
-        } sm:group-hover:rotate-y-180`}
+        } ${!isMobile ? "group-hover:[transform:rotateY(180deg)]" : ""}`}
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Front Side */}

@@ -1,0 +1,131 @@
+import happyGift from "../assets/happyGift.json";
+import cretificate from "../assets/cretificate.json";
+import invitation from "../assets/invitation.json";
+import connection from "../assets/connection.json";
+
+import React, { useState } from "react";
+import Lottie from "lottie-react";
+
+const Incentives = () => {
+  const FlipCard = ({ animation, title, description }) => {
+    const [flipped, setFlipped] = useState(false);
+
+    const handleClick = () => {
+      setFlipped((prev) => !prev);
+    };
+
+    return (
+      <div
+        className="w-70 h-70 relative"
+        style={{ perspective: "1000px", marginTop: "1rem" }}
+        onClick={handleClick}
+      >
+        <div
+          className={`relative w-full h-full transition-transform duration-700 ${
+            flipped ? "rotate-y-180" : ""
+          }`}
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          {/* Front Side */}
+          <div
+            className="absolute w-full h-full rounded-xl shadow-xl flex flex-col items-center justify-center p-4 bg-black/30"
+            style={{
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+            }}
+          >
+            <Lottie animationData={animation} className="w-30 h-30" loop={true} />
+            <h2
+              className="text-xl font-semibold text-center font-['Poppins']"
+              style={{ color: "#FFD700" }}
+            >
+              {title}
+            </h2>
+           <div className="w-full">
+            
+            <p
+              onClick={(e) => {
+                e.stopPropagation();
+                setFlipped((prev) => !prev);
+              }}
+              className="text-gray-400 text-center select-none hover:color-yellow-400 cursor-pointer transition-colors duration-300 mt-7"
+            >
+              Tap Here For More
+            </p>
+          </div>
+          </div>
+
+          {/* Back Side */}
+          <div
+            className="absolute w-full h-full rounded-xl shadow-xl flex items-center justify-center p-6 rotate-y-180"
+            style={{
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+            }}
+          >
+            <p
+              className="text-xl font-semibold text-center font-['Poppins']"
+              style={{ color: "#FFD700" }}
+            >
+              {description}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center p-6">
+      {/* Gradient Text with Underline on Hover */}
+      <h1
+        className="text-4xl font-extrabold text-transparent bg-clip-text relative mb-10 cursor-pointer"
+        style={{
+          backgroundImage: "linear-gradient(to right, #06b6d4, #3b82f6)",
+          color: "#FFD700", // Set final rendered text to golden
+        }}
+      >
+        Incentives
+        <span
+          style={{
+            content: "''",
+            position: "absolute",
+            left: 0,
+            bottom: -4,
+            height: "3px",
+            width: "var(--underline-width, 0%)",
+            backgroundImage: "linear-gradient(to right, #06b6d4, #3b82f6)",
+            transition: "width 0.4s ease-in-out",
+            display: "block",
+          }}
+        ></span>
+      </h1>
+
+      {/* Flip Cards */}
+      <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">
+        <FlipCard
+          animation={happyGift}
+          title="Premium Hampers"
+          description="Premium gifts assortments and curated hampers presented upon the fest conclusion"
+        />
+        <FlipCard
+          animation={cretificate}
+          title="Certificate of Merit"
+          description="Exclusive certificate awarded in recognition of outstanding performance"
+        />
+        <FlipCard
+          animation={invitation}
+          title="Formal Access Privilege"
+          description="Entitled to attend all formal events and official programs conducted by Shaurya, IIT Kharagpur."
+        />
+        <FlipCard
+          animation={connection}
+          title="Networking Opportunity"
+          description="Engage with students from IIT Kharagpur and diverse colleges across the country."
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Incentives;
